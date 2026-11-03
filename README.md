@@ -4,6 +4,14 @@ Panduan singkat untuk menjalankan proyek **Dauria** di komputer lokal setelah `g
 
 ---
 
+## Tech Stack
+
+* **Backend:** Laravel 13 (PHP 8.2+)
+* **Frontend:** React + Inertia.js
+* **Styling:** Tailwind CSS / Shadcn UI
+* **Database:** MySQL
+* **Tooling:** Vite, Composer, Node.js (npm)
+
 ## Langkah Setup Wajib
 
 1. **Clone Repositori & Masuk Folder**
@@ -13,18 +21,31 @@ Panduan singkat untuk menjalankan proyek **Dauria** di komputer lokal setelah `g
 2. **Install Dependencies (Composer)**
    composer install
 
-3. **Buat File Environment (.env)**
+3. **Install Dependensi Frontend (Node.js / React / Inertia / Tailwind)**
+   npm install --legacy-peer-deps
+
+4. **Buat File Environment (.env)**
    - macOS / Linux: `cp .env.example .env`
    - Windows: `copy .env.example .env`
 
-4. **Generate Key**
+5. **Generate Key**
    php artisan key:generate
 
-5. **Migrasi Database** (ini buat nanti jadi bisa diabaikan dulu aja yah)
+6. **Generate Application Key**
+   php artisan key:generate 
+   
+7. **Migrasi Database** (ini buat nanti jadi bisa diabaikan dulu aja yah)
    (Pastikan database `dauria_db` sudah dibuat di MySQL/XAMPP, lalu jalankan)
-   php artisan migrate 
+   php artisan migrate
 
-6. **Jalankan Server**
-   php artisan serve
+* **Terminal 1 (Server Frontend / Vite Compiler):**
+  ```bash
+  npm run dev
+  ```
+
+* **Terminal 2 (Server Backend / Laravel):**
+  ```bash
+  php artisan serve
+  ```
 
 Buka browser dan akses: [http://127.0.0.1:8000](http://127.0.0.1:8000)
