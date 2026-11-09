@@ -1,0 +1,75 @@
+dauria-app/
+├── app/                                  # BACKEND (PHP / Laravel)
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Auth/                     # Login, Register, Logout (Diisi bersama)[cite: 1]
+│   │   │   ├── Konsumen/                 # [Anggota 1] PenyaluranController, VoucherController
+│   │   │   ├── Kurir/                    # [Anggota 2] PickupController, RouteController[cite: 1, 1]
+│   │   │   ├── SortingHub/               # [Anggota 3] VerifikasiController, WarningController[cite: 1, 1]
+│   │   │   ├── Gudang/                   # [Anggota 4] StokTekstilController, MatcherController[cite: 1, 1]
+│   │   │   ├── Mitra/                    # [Anggota 5] MaterialRequestController, ReservasiController[cite: 1, 1]
+│   │   │   └── Admin/                    # [Anggota 6] DashboardController, ParameterController[cite: 1, 1]
+│   │   ├── Middleware/
+│   │   │   └── HandleInertiaRequests.php # Passing data global (User Auth, Flash Message, Poin)
+│   │   └── Requests/                     # Form Request Validasi per Modul
+│   │
+│   ├── Models/                           # ELOQUENT MODELS (Bisa dipakai bersama)
+│   │   ├── User.php                      # Superclass Pengguna (Role: Konsumen, Kurir, dll)[cite: 1, 1]
+│   │   ├── PenyaluranTekstil.php         # Transaksi Penyaluran[cite: 1]
+│   │   ├── VoucherReward.php             # Katalog Voucher[cite: 1]
+│   │   ├── PesananPickup.php             # Tugas Kurir[cite: 1]
+│   │   ├── DataTekstil.php               # Stok Gudang[cite: 1]
+│   │   ├── MaterialRequest.php           # Kebutuhan Mitra[cite: 1]
+│   │   ├── Pengaduan.php                 # Form Pengaduan[cite: 1]
+│   │   └── ParameterSistem.php           # Konversi Poin & Min Berat[cite: 1]
+│   │
+│   └── Services/                         # Business Logic Kompleks (Matching Engine, Poin Calculator)[cite: 1, 1]
+│
+├── database/
+│   ├── migrations/                       # Skema Tabel MySQL
+│   └── seeders/                          # Data Dummy (Master Data Kategori, Parameter awal)[cite: 1, 1]
+│
+├── resources/                            # FRONTEND (React + Inertia.js + Tailwind / Shadcn UI)
+│   ├── js/
+│   │   ├── Components/                   # UI Reusable Shadcn/Tailwind (Button, Card, Modal, Table, Input)
+│   │   ├── Layouts/                      # Layout Berdasarkan Aktor (Sidebar/Navbar beda tiap role)
+│   │   │   ├── AuthLayout.jsx
+│   │   │   ├── KonsumenLayout.jsx
+│   │   │   ├── KurirLayout.jsx
+│   │   │   ├── GudangLayout.jsx
+│   │   │   ├── MitraLayout.jsx
+│   │   │   └── AdminLayout.jsx
+│   │   │
+│   │   ├── Pages/                        # INERTIA PAGES (Disesuaikan Per Aktor)
+│   │   │   ├── Auth/                     # Page Login, Register, Lupa Password[cite: 1]
+│   │   │   ├── Konsumen/                 # [Anggota 1]
+│   │   │   │   ├── FormPenyaluran.jsx    # UI Input Penyaluran (UC-09)[cite: 1]
+│   │   │   │   ├── KatalogVoucher.jsx    # UI Tukar Poin (UC-12)[cite: 1]
+│   │   │   │   └── RiwayatTekstil.jsx    # UI Riwayat Transaksi (UC-13)[cite: 1]
+│   │   │   ├── Kurir/                    # [Anggota 2]
+│   │   │   │   ├── DaftarPickup.jsx      # UI List Tugas Pickup (UC-15)[cite: 1]
+│   │   │   │   ├── DetailPesanan.jsx     # UI Detail & Upload Foto (UC-16, UC-19)[cite: 1, 1]
+│   │   │   │   └── PetaRute.jsx          # UI Integrasi Maps (UC-17)[cite: 1]
+│   │   │   ├── SortingHub/               # [Anggota 3]
+│   │   │   │   ├── Verifikasi.jsx        # UI Form Verifikasi Fisik (UC-23)[cite: 1]
+│   │   │   │   └── WarningForm.jsx       # UI Warning Konsumen (UC-24)[cite: 1]
+│   │   │   ├── Gudang/                   # [Anggota 4]
+│   │   │   │   ├── PendataanStok.jsx     # UI Input Stok Baru (UC-27)[cite: 1]
+│   │   │   │   ├── MatcherEngine.jsx     # UI Pencocokan Tekstil (UC-31)[cite: 1]
+│   │   │   │   └── PengaduanMitra.jsx    # UI Verifikasi Pengaduan (UC-35)[cite: 1]
+│   │   │   ├── Mitra/                    # [Anggota 5]
+│   │   │   │   ├── MaterialRequest.jsx   # UI Pengajuan Tekstil (UC-39)[cite: 1]
+│   │   │   │   ├── Reservasi.jsx         # UI Pre-order Tekstil (UC-48)[cite: 1]
+│   │   │   │   └── FormPengaduan.jsx     # UI Pengaduan Kendala (UC-47)[cite: 1]
+│   │   │   └── Admin/                    # [Anggota 6]
+│   │   │       ├── DashboardSirkulasi.jsx# UI Analitik Sirkulasi (UC-56)[cite: 1]
+│   │   │       ├── KelolaUser.jsx        # UI Blokir/Buka Akses (UC-49, UC-50)[cite: 1, 1]
+│   │   │       └── ParameterSistem.jsx   # UI Config Poin/Pickup (UC-55)[cite: 1]
+│   │   │
+│   │   └── app.jsx                       # Entry Point Inertia React
+│   └── css/
+│       └── app.css                       # Setup Tailwind CSS & Variable Shadcn UI
+│
+├── routes/
+│   ├── web.php                           # ROUTING UTAMA (Dikelompokkan per Middleware Role)
+│   └── auth.php                          # Route Autentikasi
